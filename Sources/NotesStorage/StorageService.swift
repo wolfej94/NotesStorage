@@ -10,7 +10,7 @@ import Combine
 
 /// A service responsible for managing Core Data operations for notes.
 /// Provides support for synchronous, async/await, closure-based, and Combine-based methods.
-public final class StorageService: StorageServiceProtocol, @unchecked Sendable {
+internal final class StorageService: StorageServiceProtocol, @unchecked Sendable {
 
     // MARK: - Properties
 
@@ -19,9 +19,9 @@ public final class StorageService: StorageServiceProtocol, @unchecked Sendable {
     internal var coreData: CoreDataHelper
     private var cancellables = Set<AnyCancellable>()
 
-    /// Public initializer for use in the application.
+    /// Initializer for use in the application.
     /// Configures the container with the persistent store.
-    public init() {
+    init() {
         coreData = DefaultCoreDataHelper()
         guard let modelURL = Bundle.module.url(forResource: "Model", withExtension: "momd"),
               let model = NSManagedObjectModel(contentsOf: modelURL) else {
@@ -43,7 +43,7 @@ public final class StorageService: StorageServiceProtocol, @unchecked Sendable {
     /// Reads all notes from the persistent store.
     /// - Returns: An array of `NoteViewModel` instances.
     /// - Throws: An error if the fetch operation fails.
-    public func read() throws -> [NoteViewModel] {
+    func read() throws -> [NoteViewModel] {
         return try coreData.fetchManagedObjects(
             ofType: Note.self,
             byIDs: nil,
@@ -55,7 +55,7 @@ public final class StorageService: StorageServiceProtocol, @unchecked Sendable {
 }
 
 // MARK: - Async/Await Methods
-public extension StorageService {
+extension StorageService {
 
     /// Creates a new note asynchronously.
     /// - Parameters:
@@ -85,7 +85,7 @@ public extension StorageService {
 }
 
 // MARK: - Closure Methods
-public extension StorageService {
+extension StorageService {
 
     /// Creates a new note using a closure-based completion handler.
     /// - Parameters:
@@ -119,7 +119,7 @@ public extension StorageService {
 }
 
 // MARK: - Combine Publisher Methods
-public extension StorageService {
+extension StorageService {
 
     /// Returns a publisher to create a new note.
     /// - Parameters:

@@ -32,9 +32,9 @@ This package is distributed as a Swift Package Manager (SPM) package. To include
 import NotesStorage
 ```
 
-### StorageService
+### NotesStorage Class
 
-The `StorageService` class conforms to the `StorageServiceProtocol` protocol and provides the following public methods:
+The `NotesStorage` class provides a public interface for managing notes. It encapsulates the `StorageService` and offers methods for asynchronous, closure-based, and Combine-based operations.
 
 #### Asynchronous Methods
 
@@ -48,13 +48,13 @@ func delete(_ notes: [NoteViewModel]) async throws
 Example:
 
 ```swift
-let storageService: StorageServiceProtocol = StorageService()
+let notesStorage = NotesStorage()
 
-let newNote = NoteViewModel(id: UUID(), title: "New Note", body: "This is a test note.", createdAt: Date(), updatedAt: Date())
+let newNote = NoteViewModel(id: UUID(), title: "New Note", body: "This is a test note.")
 
 do {
-    try await storageService.create(newNote)
-    let notes = try storageService.read()
+    try await notesStorage.create(newNote)
+    let notes = try notesStorage.read()
     print("Notes: \(notes)")
 } catch {
     print("An error occurred: \(error)")
@@ -74,7 +74,7 @@ func delete(_ notes: [NoteViewModel], completion: @escaping (Result<Void, any Er
 Example:
 
 ```swift
-storageService.create(newNote) { result in
+notesStorage.create(newNote) { result in
     switch result {
     case .success:
         print("Note created successfully.")
@@ -97,7 +97,7 @@ func deletePublisher(_ notes: [NoteViewModel]) -> AnyPublisher<Void, any Error>
 Example:
 
 ```swift
-let cancellable = storageService.createPublisher(newNote)
+let cancellable = notesStorage.createPublisher(newNote)
     .sink(receiveCompletion: { completion in
         switch completion {
         case .finished:

@@ -160,7 +160,7 @@ extension DefaultCoreDataHelper: ClosureCoreDataHelper {
                 storageObject.title = note.title
                 storageObject.body = note.body
                 storageObject.createdAt = note.createdAt
-                storageObject.updatedAt = note.updatedAt
+                storageObject.updatedAt = Date()
                 try context.save()
                 completion(.success(()))
             } catch {

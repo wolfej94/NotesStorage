@@ -64,7 +64,7 @@ final class MockCoreDataHelper: CoreDataHelper {
         completion(.success(()))
     }
 
-    func insertPublisher(note: NotesStorage.NoteViewModel,
+    func insertPublisher(note: NoteViewModel,
                          in context: ManagedObjectContext) -> AnyPublisher<Void, any Error> {
         if let errorToThrowForInsert {
             return Fail(error: errorToThrowForInsert).eraseToAnyPublisher()
@@ -74,7 +74,7 @@ final class MockCoreDataHelper: CoreDataHelper {
             .eraseToAnyPublisher()
     }
 
-    func updatePublisher(note: NotesStorage.NoteViewModel,
+    func updatePublisher(note: NoteViewModel,
                          in context: ManagedObjectContext) -> AnyPublisher<Void, any Error> {
         if let errorToThrowForUpdate {
             return Fail(error: errorToThrowForUpdate).eraseToAnyPublisher()
