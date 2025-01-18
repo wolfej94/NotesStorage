@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "E240044A-3C27-4F61-845C-B3E6AD2C20E7",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NotesStorageTests",
+        "name" : "NotesStorageTests"
+      }
+    }
+  ],
+  "version" : 1
+}
