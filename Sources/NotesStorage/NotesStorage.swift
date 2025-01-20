@@ -9,7 +9,11 @@ import Combine
 
 public final class NotesStorage {
 
-    private let storageService = StorageService()
+    private let storageService: StorageService
+
+    public init() { 
+        storageservice = StorageService()
+    }
 
     /// Creates a new note asynchronously.
     /// - Parameters:
