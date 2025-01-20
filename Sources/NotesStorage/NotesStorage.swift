@@ -7,12 +7,12 @@
 
 import Combine
 
-public final class NotesStorage {
+public final class NotesStorage: Sendable {
 
     private let storageService: StorageService
 
     public init() { 
-        storageservice = StorageService()
+        storageService = StorageService()
     }
 
     /// Creates a new note asynchronously.
