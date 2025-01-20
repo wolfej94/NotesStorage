@@ -7,7 +7,7 @@
 
 import Combine
 
-final class NotesStorage {
+public final class NotesStorage {
 
     private let storageService = StorageService()
 
@@ -15,14 +15,14 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to create.
     /// - Throws: An error if the creation fails.
-    func create(_ note: NoteViewModel) async throws {
+    public func create(_ note: NoteViewModel) async throws {
         try await storageService.create(note)
     }
 
     /// Reads all notes from storage.
     /// - Returns: An array of `NoteViewModel` instances.
     /// - Throws: An error if the read operation fails.
-    func read() throws -> [NoteViewModel] {
+    public func read() throws -> [NoteViewModel] {
         try storageService.read()
     }
 
@@ -30,7 +30,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to update.
     /// - Throws: An error if the update fails.
-    func update(_ note: NoteViewModel) async throws {
+    public func update(_ note: NoteViewModel) async throws {
         try await storageService.update(note)
     }
 
@@ -38,7 +38,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - notes: An array of `NoteViewModel` instances to delete.
     /// - Throws: An error if the deletion fails.
-    func delete(_ notes: [NoteViewModel]) async throws {
+    public func delete(_ notes: [NoteViewModel]) async throws {
         try await storageService.delete(notes)
     }
 
@@ -46,7 +46,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to create.
     ///   - completion: A completion handler called with the result of the operation.
-    func create(_ note: NoteViewModel, completion: @escaping (Result<Void, any Error>) -> Void) {
+    public func create(_ note: NoteViewModel, completion: @escaping (Result<Void, any Error>) -> Void) {
         storageService.create(note, completion: completion)
     }
 
@@ -54,7 +54,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to update.
     ///   - completion: A completion handler called with the result of the operation.
-    func update(_ note: NoteViewModel, completion: @escaping (Result<Void, any Error>) -> Void) {
+    public func update(_ note: NoteViewModel, completion: @escaping (Result<Void, any Error>) -> Void) {
         storageService.update(note, completion: completion)
     }
 
@@ -62,7 +62,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - notes: An array of `NoteViewModel` instances to delete.
     ///   - completion: A completion handler called with the result of the operation.
-    func delete(_ notes: [NoteViewModel], completion: @escaping (Result<Void, any Error>) -> Void) {
+   public func delete(_ notes: [NoteViewModel], completion: @escaping (Result<Void, any Error>) -> Void) {
         storageService.delete(notes, completion: completion)
     }
 
@@ -70,7 +70,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to create.
     /// - Returns: A publisher emitting success or error.
-    func createPublisher(_ note: NoteViewModel) -> AnyPublisher<Void, any Error> {
+    public func createPublisher(_ note: NoteViewModel) -> AnyPublisher<Void, any Error> {
         return storageService.createPublisher(note)
     }
 
@@ -78,7 +78,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - note: The `NoteViewModel` representing the note to update.
     /// - Returns: A publisher emitting success or error.
-    func updatePublisher(_ note: NoteViewModel) -> AnyPublisher<Void, any Error> {
+    public func updatePublisher(_ note: NoteViewModel) -> AnyPublisher<Void, any Error> {
         return storageService.updatePublisher(note)
     }
 
@@ -86,7 +86,7 @@ final class NotesStorage {
     /// - Parameters:
     ///   - notes: An array of `NoteViewModel` instances to delete.
     /// - Returns: A publisher emitting success or error.
-    func deletePublisher(_ notes: [NoteViewModel]) -> AnyPublisher<Void, any Error> {
+    public func deletePublisher(_ notes: [NoteViewModel]) -> AnyPublisher<Void, any Error> {
         return storageService.deletePublisher(notes)
     }
 }
