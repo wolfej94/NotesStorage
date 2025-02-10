@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 /// A view model representing a Note entity in the application.
-public struct NoteViewModel: Sendable {
+public struct NoteViewModel: Sendable, Identifiable, Hashable {
 
     /// The unique identifier for the note.
     public let id: UUID
