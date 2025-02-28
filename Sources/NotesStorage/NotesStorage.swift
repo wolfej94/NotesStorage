@@ -10,9 +10,17 @@ import Combine
 public final class NotesStorage: Sendable {
 
     private let storageService: StorageService
+    private let eventStream: StorageEventStream
+    public static let shared = NotesStorage()
 
-    public init() { 
+    internal init(eventStream: StorageEventStream) {
         storageService = StorageService()
+        self.eventStream = eventStream
+    }
+    
+    internal init() {
+        storageService = StorageService()
+        eventStream = DefaultStorageEventStream()
     }
 
     /// Creates a new note asynchronously.
@@ -21,6 +29,7 @@ public final class NotesStorage: Sendable {
     /// - Throws: An error if the creation fails.
     public func create(_ note: NoteViewModel) async throws {
         try await storageService.create(note)
+        await eventStream.sendNoteUpdate(note)
     }
 
     /// Reads all notes from storage.
@@ -36,6 +45,7 @@ public final class NotesStorage: Sendable {
     /// - Throws: An error if the update fails.
     public func update(_ note: NoteViewModel) async throws {
         try await storageService.update(note)
+        await eventStream.sendNoteUpdate(note)
     }
 
     /// Deletes notes asynchronously.
@@ -93,4 +103,17 @@ public final class NotesStorage: Sendable {
     public func deletePublisher(_ notes: [NoteViewModel]) -> AnyPublisher<Void, any Error> {
         return storageService.deletePublisher(notes)
     }
+    
+    /// Calls closure whenever an event is triggered.
+    /// - Parameter onEvent: Closure to call whenever an concurrency event occurs in storage
+    public func subscribeToEvents(onEvent: @escaping @Sendable @MainActor (NoteViewModel) async -> Void) -> Task<Void, Never> {
+        return Task {
+            for await task in await eventStream.noteStream() {
+                if Task.isCancelled { break }
+                let note = await task.value
+                await onEvent(note)
+            }
+        }
+    }
+    
 }

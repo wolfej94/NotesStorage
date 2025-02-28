@@ -46,4 +46,13 @@ public struct NoteViewModel: Sendable, Identifiable, Hashable {
         self.createdAt = Date()
         self.updatedAt = Date()
     }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: NoteViewModel, rhs: NoteViewModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
 }
